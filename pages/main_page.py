@@ -1,10 +1,12 @@
-'''Базовая страница, от которой будут унаследованы все остальные классы.
-    В ней описаны вспомогательные методы для работы с драйвером.'''
+from selenium.webdriver.common.by import By
 
-class BasePage():
-    def __init__(self, browser, url):
-        self.browser = browser
-        self.url = url
+from .base_page import BasePage
 
-    def open(self):
-        self.browser.get(self.url)
+
+class MainPage(BasePage):
+    def go_to_login_page(self):
+        login_link = self.browser.find_element_by_css_selector("#login_link")
+        login_link.click()
+
+    def should_be_login_link(self):
+        assert self.is_element_present(By.CSS_SELECTOR, "#login_link"), "Login link is not presented"
